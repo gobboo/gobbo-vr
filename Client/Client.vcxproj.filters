@@ -42,25 +42,88 @@
     <ClInclude Include="kiero\kiero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gui\menu.h">
+    <ClInclude Include="gui\menu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\Callback.hpp">
+    <ClInclude Include="hooks\directx.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\Class.hpp">
+    <ClInclude Include="gui\theme.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\Domain.hpp">
+    <ClInclude Include="user\state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\ResolveCall.hpp">
+    <ClInclude Include="user\keybinds.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\String.hpp">
+    <ClInclude Include="gui\RenderCmd.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\API\Thread.hpp">
+    <ClInclude Include="gui\Renderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\tabs\debug_tab.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user\game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_dx11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_win32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user\main.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\visuals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\render\debug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user\util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\Callback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\Class.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\Domain.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\ResolveCall.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\String.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Functions\Thread.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Unity\API\_TEMPLATE_API.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="il2cpp\Unity\API\Camera.hpp">
@@ -96,22 +159,31 @@
     <ClInclude Include="il2cpp\Unity\Structures\il2cppDictionary.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="il2cpp\Unity\Structures\Includes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="il2cpp\Unity\Structures\System_String.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="il2cpp\Unity\Defines.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\Unity\Obfuscators.hpp">
+    <ClInclude Include="il2cpp\Unity\Includes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\Utils\Hash.hpp">
+    <ClInclude Include="il2cpp\Unity\Obfuscators.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="il2cpp\Utils\Helper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\Utils\VTable.hpp">
+    <ClInclude Include="il2cpp\Utils\Joaat.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Utils\VFunc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp\Cache.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="il2cpp\Data.hpp">
@@ -120,58 +192,13 @@
     <ClInclude Include="il2cpp\Defines.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\IL2CPP_Resolver.hpp">
+    <ClInclude Include="il2cpp\il2cpp_resolver.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="il2cpp\SystemTypeCache.hpp">
+    <ClInclude Include="il2cpp\Includes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\directx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\theme.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="user\state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="user\keybinds.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\RenderCmd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\tabs\debug_tab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="user\game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_impl_dx11.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_impl_win32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imstb_textedit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imstb_truetype.h">
+    <ClInclude Include="il2cpp\lazyimporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -240,6 +267,69 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\visuals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\render\debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Functions\Callback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Functions\Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Functions\String.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Functions\Thread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\_TEMPLATE_API.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\LayerMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\Rigidbody.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\API\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Unity\Obfuscators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Utils\Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Cache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\Data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp\il2cpp_resolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

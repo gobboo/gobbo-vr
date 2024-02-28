@@ -1,6 +1,6 @@
-#include "Renderer.h"
-#include "RenderCmd.h"
-#include "../hooks/directx.h"
+#include "Renderer.hpp"
+#include "RenderCmd.hpp"
+#include "../hooks/directx.hpp"
 
 static RenderCmdQueue s_CmdQueue;
 

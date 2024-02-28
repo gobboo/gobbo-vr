@@ -71,16 +71,18 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExecutablePath>%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Include\;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <LibraryPath>%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build</OutDir>
     <IntDir>$(Platform)\build\client-intermediate\</IntDir>
+    <IncludePath>$(SolutionDir)Client\il2cpp\;%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExecutablePath>%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Include\;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <LibraryPath>%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build</OutDir>
     <IntDir>$(Platform)\build\client-intermediate\</IntDir>
+    <IncludePath>%programfiles(x86)%\Microsoft DirectX SDK (June 2010)\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -155,22 +157,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gui\menu.h" />
-    <ClInclude Include="gui\RenderCmd.h" />
-    <ClInclude Include="gui\Renderer.h" />
-    <ClInclude Include="gui\tabs\debug_tab.h" />
-    <ClInclude Include="gui\theme.h" />
-    <ClInclude Include="hooks\directx.h" />
-    <ClInclude Include="il2cpp\API\Callback.hpp" />
-    <ClInclude Include="il2cpp\API\Class.hpp" />
-    <ClInclude Include="il2cpp\API\Domain.hpp" />
-    <ClInclude Include="il2cpp\API\ResolveCall.hpp" />
-    <ClInclude Include="il2cpp\API\String.hpp" />
-    <ClInclude Include="il2cpp\API\Thread.hpp" />
+    <ClInclude Include="gui\menu.hpp" />
+    <ClInclude Include="gui\RenderCmd.hpp" />
+    <ClInclude Include="gui\Renderer.hpp" />
+    <ClInclude Include="gui\render\debug.hpp" />
+    <ClInclude Include="gui\tabs\debug_tab.hpp" />
+    <ClInclude Include="gui\theme.hpp" />
+    <ClInclude Include="gui\visuals.hpp" />
+    <ClInclude Include="hooks\directx.hpp" />
+    <ClInclude Include="il2cpp\Cache.hpp" />
     <ClInclude Include="il2cpp\Data.hpp" />
     <ClInclude Include="il2cpp\Defines.hpp" />
-    <ClInclude Include="il2cpp\IL2CPP_Resolver.hpp" />
-    <ClInclude Include="il2cpp\SystemTypeCache.hpp" />
+    <ClInclude Include="il2cpp\Functions\Callback.hpp" />
+    <ClInclude Include="il2cpp\Functions\Class.hpp" />
+    <ClInclude Include="il2cpp\Functions\Domain.hpp" />
+    <ClInclude Include="il2cpp\Functions\ResolveCall.hpp" />
+    <ClInclude Include="il2cpp\Functions\String.hpp" />
+    <ClInclude Include="il2cpp\Functions\Thread.hpp" />
+    <ClInclude Include="il2cpp\il2cpp_resolver.hpp" />
+    <ClInclude Include="il2cpp\Includes.hpp" />
+    <ClInclude Include="il2cpp\lazyimporter.h" />
     <ClInclude Include="il2cpp\Unity\API\Camera.hpp" />
     <ClInclude Include="il2cpp\Unity\API\Component.hpp" />
     <ClInclude Include="il2cpp\Unity\API\GameObject.hpp" />
@@ -178,16 +184,19 @@
     <ClInclude Include="il2cpp\Unity\API\Object.hpp" />
     <ClInclude Include="il2cpp\Unity\API\Rigidbody.hpp" />
     <ClInclude Include="il2cpp\Unity\API\Transform.hpp" />
+    <ClInclude Include="il2cpp\Unity\API\_TEMPLATE_API.hpp" />
     <ClInclude Include="il2cpp\Unity\Defines.hpp" />
+    <ClInclude Include="il2cpp\Unity\Includes.hpp" />
     <ClInclude Include="il2cpp\Unity\Obfuscators.hpp" />
     <ClInclude Include="il2cpp\Unity\Structures\Engine.hpp" />
     <ClInclude Include="il2cpp\Unity\Structures\il2cpp.hpp" />
     <ClInclude Include="il2cpp\Unity\Structures\il2cppArray.hpp" />
     <ClInclude Include="il2cpp\Unity\Structures\il2cppDictionary.hpp" />
+    <ClInclude Include="il2cpp\Unity\Structures\Includes.hpp" />
     <ClInclude Include="il2cpp\Unity\Structures\System_String.hpp" />
-    <ClInclude Include="il2cpp\Utils\Hash.hpp" />
     <ClInclude Include="il2cpp\Utils\Helper.hpp" />
-    <ClInclude Include="il2cpp\Utils\VTable.hpp" />
+    <ClInclude Include="il2cpp\Utils\Joaat.hpp" />
+    <ClInclude Include="il2cpp\Utils\VFunc.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx11.h" />
@@ -205,18 +214,39 @@
     <ClInclude Include="kiero\minhook\src\hde\table32.h" />
     <ClInclude Include="kiero\minhook\src\hde\table64.h" />
     <ClInclude Include="kiero\minhook\src\trampoline.h" />
-    <ClInclude Include="user\game.h" />
-    <ClInclude Include="user\keybinds.h" />
-    <ClInclude Include="user\state.h" />
+    <ClInclude Include="user\game.hpp" />
+    <ClInclude Include="user\keybinds.hpp" />
+    <ClInclude Include="user\main.hpp" />
+    <ClInclude Include="user\state.hpp" />
+    <ClInclude Include="user\util.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="gui\menu.cpp" />
     <ClCompile Include="gui\RenderCmd.cpp" />
     <ClCompile Include="gui\Renderer.cpp" />
+    <ClCompile Include="gui\render\debug.cpp" />
     <ClCompile Include="gui\tabs\debug_tab.cpp" />
     <ClCompile Include="gui\theme.cpp" />
+    <ClCompile Include="gui\visuals.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
+    <ClCompile Include="il2cpp\Cache.cpp" />
+    <ClCompile Include="il2cpp\Data.cpp" />
+    <ClCompile Include="il2cpp\Functions\Callback.cpp" />
+    <ClCompile Include="il2cpp\Functions\Class.cpp" />
+    <ClCompile Include="il2cpp\Functions\String.cpp" />
+    <ClCompile Include="il2cpp\Functions\Thread.cpp" />
+    <ClCompile Include="il2cpp\il2cpp_resolver.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\Camera.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\Component.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\GameObject.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\LayerMask.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\Object.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\Rigidbody.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\Transform.cpp" />
+    <ClCompile Include="il2cpp\Unity\API\_TEMPLATE_API.cpp" />
+    <ClCompile Include="il2cpp\Unity\Obfuscators.cpp" />
+    <ClCompile Include="il2cpp\Utils\Helper.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -230,8 +260,10 @@
     <ClCompile Include="kiero\minhook\src\hde\hde64.c" />
     <ClCompile Include="kiero\minhook\src\hook.c" />
     <ClCompile Include="kiero\minhook\src\trampoline.c" />
+    <ClCompile Include="user\game.cpp" />
     <ClCompile Include="user\keybinds.cpp" />
     <ClCompile Include="user\state.cpp" />
+    <ClCompile Include="user\util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="kiero\minhook\dll_resources\MinHook.def" />

@@ -1,7 +1,15 @@
 #pragma once
+#define M_PI       3.14159265358979323846   // pi
 
 namespace Unity
 {
+	enum eye
+	{
+		eye_left,
+		eye_right,
+		mono
+	};
+	
 	struct Vector2
 	{
 		float x, y;
@@ -16,25 +24,7 @@ namespace Unity
 
 		Vector3() { x = y = z = 0.f; }
 		Vector3(float f1, float f2, float f3) { x = f1; y = f2; z = f3; }
-		
-		float Length()
-		{
-			return x * x + y * y + z * z;
-		}
-		
-		float Dot(Vector3 b)
-		{
-			return x * b.x + y * b.y + z * b.z;
-		}
 
-		Vector3 Normalize()
-		{
-			float len = Length();
-			if (len > 0)
-				return Vector3(x / len, y / len, z / len);
-			else
-				return Vector3(x, y, z);
-		}
 		void ToVectors(Vector3* m_pForward, Vector3* m_pRight, Vector3* m_pUp)
 		{
 			float m_fDeg2Rad = static_cast<float>(M_PI) / 180.f;
@@ -68,6 +58,12 @@ namespace Unity
 				m_pUp->y = m_fCosZ * m_fCosX;
 				m_pUp->z = m_fCosZ * m_fSinX * m_fSinY + -m_fSinZ * m_fCosY;
 			}
+		}
+
+		// Magnitude
+		static float Distance(Vector3 v1, Vector3 v2)
+		{
+			return sqrtf(powf(v2.x - v1.x, 2) + powf(v2.y - v1.y, 2) + powf(v2.z - v1.z, 2));
 		}
 	};
 

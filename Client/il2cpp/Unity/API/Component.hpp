@@ -1,36 +1,31 @@
 #pragma once
+#include <Unity/API/Object.hpp>
 
 namespace Unity
 {
-	struct ComponentFunctions_t
+	struct SComponentFunctions
 	{
-		void* m_GetGameObject = nullptr;
-		void* m_GetTransform = nullptr;
+		void* m_pGetGameObject = nullptr;
+		void* m_pGetTransform = nullptr;
 	};
-	ComponentFunctions_t m_ComponentFunctions;
+	extern SComponentFunctions ComponentFunctions;
 
 	class CComponent : public CObject
 	{
 	public:
 		CGameObject* GetGameObject()
 		{
-			return reinterpret_cast<CGameObject*(UNITY_CALLING_CONVENTION)(void*)>(m_ComponentFunctions.m_GetGameObject)(this);
+			return reinterpret_cast<CGameObject*(UNITY_CALLING_CONVENTION)(void*)>(ComponentFunctions.m_pGetGameObject)(this);
 		}
 
 		CTransform* GetTransform()
 		{
-			return reinterpret_cast<CTransform*(UNITY_CALLING_CONVENTION)(void*)>(m_ComponentFunctions.m_GetTransform)(this);
+			return reinterpret_cast<CTransform*(UNITY_CALLING_CONVENTION)(void*)>(ComponentFunctions.m_pGetTransform)(this);
 		}
 	};
 
 	namespace Component
 	{
-		void Initialize()
-		{
-			IL2CPP::SystemTypeCache::Initializer::Add(UNITY_COMPONENT_CLASS);
-
-			m_ComponentFunctions.m_GetGameObject	= IL2CPP::ResolveCall(UNITY_COMPONENT_GETGAMEOBJECT);
-			m_ComponentFunctions.m_GetTransform		= IL2CPP::ResolveCall(UNITY_COMPONENT_GETTRANSFORM);
-		}
+		void Initialize();
 	}
 }

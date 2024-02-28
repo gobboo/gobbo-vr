@@ -1,16 +1,19 @@
-#include "directx.h"
+#include "directx.hpp"
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_internal.h"
 #include "../imgui/imgui_impl_dx11.h"
 #include "../imgui/imgui_impl_win32.h"
-#include "../gui/theme.h"
-#include "../user/state.h"
-#include "../user/keybinds.h"
-#include "../gui/Renderer.h"
-#include "../gui/menu.h"
+#include "../user/state.hpp"
+#include "../user/keybinds.hpp"
+#include "../user/main.hpp"
+#include "../gui/theme.hpp"
+#include "../gui/Renderer.hpp"
+#include "../gui/menu.hpp"
 #include <mutex>
 #include <unordered_map>
 #include <future>
+#include <iostream>
+#include "../gui/visuals.hpp"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -40,15 +43,14 @@ ImVec2 DirectX::GetWindowSize()
 {
     //if (Screen_get_fullScreen(nullptr))
     //{
-    //    RECT rect;
-    //    GetWindowRect(window, &rect);
-
-    //    return { (float)(rect.right - rect.left),  (float)(rect.bottom - rect.top) };
+    RECT rect;
+    GetWindowRect(window, &rect);
+    return { (float)(rect.right - rect.left),  (float)(rect.bottom - rect.top) };
     //}
 
     //return { (float)Screen_get_width(nullptr), (float)Screen_get_height(nullptr) };
     // TODO
-    return { 0, 0 };
+    //return { 0, 0 };
 }
 
 // Hooked so we can listen to the window messages
@@ -80,7 +82,7 @@ LRESULT __stdcall dWndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
     KeyBinds::WndProc(uMsg, wParam, lParam);
 
     if (KeyBinds::IsKeyPressed(State.KeyBinds.Toggle_Menu)) State.ShowMenu = !State.ShowMenu;
-    //if (KeyBinds::IsKeyPressed(State.KeyBinds.Toggle_Radar)) State.ShowRadar = !State.ShowRadar;
+    if (KeyBinds::IsKeyPressed(State.KeyBinds.Destroy)) SetEvent(hUnloadEvent);
     //if (KeyBinds::IsKeyPressed(State.KeyBinds.Toggle_Console)) State.ShowConsole = !State.ShowConsole;
     //if (KeyBinds::IsKeyPressed(State.KeyBinds.Repair_Sabotage) && IsInGame()) RepairSabotage(*Game::pLocalPlayer);
     //if (KeyBinds::IsKeyPressed(State.KeyBinds.Toggle_Noclip) && (IsInGame() || IsInLobby())) { State.NoClip = !State.NoClip; State.HotkeyNoClip = true; }
@@ -128,6 +130,8 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 
         // icons.insert({ ICON_TYPES::VENT_IN, { D3D11Image(Resource(IDB_PNG5), pDevice), 0.02f } });
 
+        std::cout << "ImGui Initialized successfully!" << std::endl;
+
         DirectX::hRenderSemaphore = CreateSemaphore(
             NULL,                                 // default security attributes
             MAX_RENDER_THREAD_COUNT,              // initial count
@@ -164,7 +168,7 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
         }
     }
 
-    // WaitForSingleObject(DirectX::hRenderSemaphore, INFINITE);
+    WaitForSingleObject(DirectX::hRenderSemaphore, INFINITE);
 
     // resolution changed
     if (!pRenderTargetView) {
@@ -179,11 +183,11 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
         // STREAM_DEBUG("DirectX Window Size: " << +size.x << "x" << +size.y);
     }
 
-    //if (State.dpiChanged) {
-    //    State.dpiChanged = false;
-    //    ImGui_ImplDX11_InvalidateDeviceObjects();
-    //    RebuildFont();
-    //}
+    if (State.dpiChanged) {
+        State.dpiChanged = false;
+        ImGui_ImplDX11_InvalidateDeviceObjects();
+        // RebuildFont();
+    }
 
     ApplyTheme();
     ImGui_ImplDX11_NewFrame();
@@ -195,34 +199,33 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
         ImGuiRenderer::Submit([]() { Menu::Render(); });
     }
 
-    //if (CanDrawEsp())
-    //{
-    //    ImGuiRenderer::Submit([&]()
-    //        {
-    //            //Push ImGui flags
-    //            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f * State.dpiScale);
-    //            ImGui::PushStyleColor(ImGuiCol_WindowBg, { 0.0f, 0.0f, 0.0f, 0.0f });
 
-    //            //Setup BackBuffer
-    //            ImGui::Begin("BackBuffer", reinterpret_cast<bool*>(true),
-    //                ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoScrollbar);
+    ImGuiRenderer::Submit([&]()
+    {
+        //Push ImGui flags
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f * State.dpiScale);
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, { 0.0f, 0.0f, 0.0f, 0.0f });
 
-    //            s_Cache.Winsize = DirectX::GetWindowSize();
-    //            s_Cache.Window = ImGui::GetCurrentWindow();
+        //Setup BackBuffer
+        ImGui::Begin("BackBuffer", reinterpret_cast<bool*>(true),
+            ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoScrollbar);
 
-    //            //Set window properties
-    //            ImGui::SetWindowPos({ 0, 0 }, ImGuiCond_Always);
-    //            ImGui::SetWindowSize(s_Cache.Winsize, ImGuiCond_Always);
+        s_Cache.Winsize = DirectX::GetWindowSize();
+        s_Cache.Window = ImGui::GetCurrentWindow();
 
-    //            Esp::Render();
+        //Set window properties
+        ImGui::SetWindowPos({ 0, 0 }, ImGuiCond_Always);
+        ImGui::SetWindowSize(s_Cache.Winsize, ImGuiCond_Always);
 
-    //            s_Cache.Window->DrawList->PushClipRectFullScreen();
+        Visuals::Render();
 
-    //            ImGui::PopStyleColor();
-    //            ImGui::PopStyleVar();
-    //            ImGui::End();
-    //        });
-    //}
+        s_Cache.Window->DrawList->PushClipRectFullScreen();
+
+        ImGui::PopStyleColor();
+        ImGui::PopStyleVar();
+        ImGui::End();
+    });
+  
 
     // Render in a separate thread
     std::async(std::launch::async, ImGuiRenderer::ExecuteQueue).wait();
@@ -237,7 +240,7 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
 
     HRESULT result = oPresent(__this, SyncInterval, Flags);
 
-   //  ReleaseSemaphore(DirectX::hRenderSemaphore, 1, NULL);
+    ReleaseSemaphore(DirectX::hRenderSemaphore, 1, NULL);
 
     return result;
 }

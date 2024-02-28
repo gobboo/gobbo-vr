@@ -1,7 +1,7 @@
 #pragma once
 #include <bitset>
 #include <queue>
-#include "keybinds.h"
+#include "keybinds.hpp"
 
 class Settings {
 public:
@@ -23,7 +23,7 @@ public:
     bool ShowMenu = false;
 
 #ifdef _DEBUG
-    bool showDebugTab = false;
+    bool DebugVisuals = false;
 #endif
 
     bool AdjustByDPI = true;
@@ -41,7 +41,7 @@ public:
 
     KeyBinds::Config KeyBinds = {
         VK_INSERT, // toggle menu
-        VK_INSERT // toggle radar
+        VK_DELETE // toggle radar
     };
 
 

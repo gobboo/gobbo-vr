@@ -1,7 +1,7 @@
-#include "menu.h"
-#include "tabs/debug_tab.h"
+#include "menu.hpp"
+#include "tabs/debug_tab.hpp"
 #include "../imgui/imgui.h"
-#include "../user/state.h"
+#include "../user/state.hpp"
 
 namespace Menu
 {

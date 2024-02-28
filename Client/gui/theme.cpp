@@ -1,4 +1,4 @@
-#include "theme.h"
+#include "theme.hpp"
 #include "../imgui/imgui.h"
 
 #define HI(v)   ImVec4(0.502f, 0.075f, 0.256f, v)

@@ -1,9 +1,13 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
-#include <Windows.h>
-#include "gui/menu.h"
-#include "il2cpp/IL2CPP_Resolver.hpp"
+#include "user/main.hpp"
+#include "gui/menu.hpp"
 #include "kiero/kiero.h"
-#include "hooks/directx.h"
+#include "hooks/directx.hpp"
+#include <cstdio>
+#include <iostream>
+#include "il2cpp/il2cpp_resolver.hpp"
+#include "user/game.hpp"
+#include <future>
 
 HMODULE hModule;
 HANDLE hUnloadEvent;
@@ -15,31 +19,15 @@ void create_console() {
     SetConsoleOutputCP(CP_UTF8);
 }
 
-void IL2Thread() {
-    void* m_pThisThread = IL2CPP::Thread::Attach(IL2CPP::Domain::Get());
-
-    while (true) {
-        if (GetAsyncKeyState(VK_DELETE) & 1) {
-			SetEvent(hUnloadEvent);
-			break;
-		}
-
-        m_pThisThread = IL2CPP::Thread::Attach(IL2CPP::Domain::Get());
-
-        // Grab players and localplayer etc :)
-
-        IL2CPP::Thread::Detach(m_pThisThread);
-		Sleep(100);
-	}
-
-    // Free the thread
-    IL2CPP::Thread::Detach(m_pThisThread);
+void GobboUpdate()
+{
+    VRC::LocalPlayer::GetLocalPlayer();
 }
 
 DWORD WINAPI MainThread(LPVOID lpReserved)
 {
     hModule = (HMODULE)lpReserved;
-    hUnloadEvent = CreateEvent(0, 0, 0, 0);
+    hUnloadEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 
     bool isDXHooked = false;
     do
@@ -58,10 +46,12 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
             }
 
             kiero::bind(8, (void**)&oPresent, dPresent);
-            CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)IL2Thread, NULL, NULL, NULL);
             isDXHooked = true;
         }
     } while (!isDXHooked);
+
+    IL2CPP::Callback::Initialize();
+    IL2CPP::Callback::OnUpdate::Add(GobboUpdate);
 
     DWORD dwWaitResult = WaitForSingleObject(hUnloadEvent, INFINITE);
     if (dwWaitResult != WAIT_OBJECT_0)
@@ -70,6 +60,10 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
         return FALSE;
 	}
 
+    IL2CPP::Callback::Uninitialize();
+
+    kiero::shutdown();
+    DirectX::Shutdown();
     fclose(stdout);
     FreeConsole();
     CloseHandle(hUnloadEvent);

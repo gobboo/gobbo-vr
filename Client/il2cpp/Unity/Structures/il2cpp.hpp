@@ -65,13 +65,6 @@ namespace Unity
 		void* m_pMonitor = nullptr;
 	};
 
-#ifdef UNITY_VERSION_2022_3_8F1
-	struct il2cppType
-	{
-		void* data;
-		unsigned int bits;
-	};
-#else
 	struct il2cppType
 	{
 		union
@@ -89,7 +82,6 @@ namespace Unity
 		unsigned int m_uByref : 1;
 		unsigned int m_uPinned : 1;
 	};
-#endif
 
 	struct il2cppFieldInfo
 	{
@@ -142,11 +134,39 @@ namespace Unity
 		unsigned short m_uFlags2;
 		unsigned short m_uSlot;
 		unsigned char m_uArgsCount;
-		unsigned char m_uGeneric : 1;
-		unsigned char m_uInflated : 1;
-		unsigned char m_uWrapperType : 1;
-		unsigned char m_uMarshaledFromNative : 1;
+		unsigned char m_uBitFlags;
+		// unsigned char m_uGeneric : 1;
+		// unsigned char m_uInflated : 1;
+		// unsigned char m_uWrapperType : 1;
+		// unsigned char m_uMarshaledFromNative : 1;
 	};
+
+	//struct MethodInfo
+	//{
+	//	Il2CppMethodPointer methodPointer;
+	//	Il2CppMethodPointer virtualMethodPointer;
+	//	InvokerMethod invoker_method;
+	//	const char* name;
+	//	Il2CppClass* klass;
+	//	const Il2CppType* return_type;
+	//	const Il2CppType** parameters;
+	//	union
+	//	{
+	//		const Il2CppRGCTXData* rgctx_data;
+	//		const void* methodMetadataHandle;
+	//	};
+	//	union
+	//	{
+	//		const void* genericMethod;
+	//		const void* genericContainerHandle;
+	//	};
+	//	uint32_t token;
+	//	uint16_t flags;
+	//	uint16_t iflags;
+	//	uint16_t slot;
+	//	uint8_t parameters_count;
+	//	uint8_t bitflags;
+	//};
 
 	struct il2cppPropertyInfo
 	{

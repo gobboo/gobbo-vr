@@ -7,7 +7,7 @@
 namespace KeyBinds {
     struct Config {
         uint8_t Toggle_Menu;
-        uint8_t Toggle_Console;
+        uint8_t Destroy;
         //uint8_t Toggle_Radar;
         //uint8_t Repair_Sabotage;
         //uint8_t Toggle_Noclip;

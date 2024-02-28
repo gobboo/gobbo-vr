@@ -2,48 +2,33 @@
 
 namespace Unity
 {
-	struct GameObjectFunctions_t
+	struct SGameObjectFunctions
 	{
-		void* m_AddComponent = nullptr;
-		void* m_CreatePrimitive = nullptr;
-		void* m_Find = nullptr;
-		void* m_FindGameObjectsWithTag = nullptr;
-		void* m_GetComponent = nullptr;
-		void* m_GetComponents = nullptr;
-		void* m_GetComponentInChildren = nullptr;
-		void* m_GetActive = nullptr;
-		void* m_GetLayer = nullptr;
-		void* m_GetTransform = nullptr;
-		void* m_SetActive = nullptr;
-		void* m_SetLayer = nullptr;
+		void* m_pAddComponent = nullptr;
+		void* m_pCreatePrimitive = nullptr;
+		void* m_pFind = nullptr;
+		void* m_pFindGameObjectsWithTag = nullptr;
+		void* m_pGetComponent = nullptr;
+		void* m_pGetComponents = nullptr;
+		void* m_pGetActive = nullptr;
+		void* m_pGetLayer = nullptr;
+		void* m_pGetTransform = nullptr;
+		void* m_pSetActive = nullptr;
+		void* m_pSetLayer = nullptr;
 	};
-	GameObjectFunctions_t m_GameObjectFunctions;
+	extern SGameObjectFunctions GameObjectFunctions;
 
 	class CGameObject : public CObject
 	{
 	public:
 		void AddComponent(il2cppObject* m_pSystemType)
 		{
-			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, void*)>(m_GameObjectFunctions.m_AddComponent)(this, m_pSystemType);
+			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, void*)>(GameObjectFunctions.m_pAddComponent)(this, m_pSystemType);
 		}
 
 		CComponent* GetComponent(const char* m_pName)
 		{
-			return reinterpret_cast<CComponent*(UNITY_CALLING_CONVENTION)(void*, System_String*)>(m_GameObjectFunctions.m_GetComponent)(this, IL2CPP::String::New(m_pName));
-		}
-
-		CComponent* GetComponentInChildren(il2cppObject* m_pSystemType, bool includeInactive)
-		{
-			return reinterpret_cast<CComponent*(UNITY_CALLING_CONVENTION)(void*, void*, bool)>(m_GameObjectFunctions.m_GetComponentInChildren)(this, m_pSystemType, includeInactive);
-		}
-
-		// e.g CGameObject->GetComponentInChildren("Namespace.Component");
-		CComponent* GetComponentInChildren(const char* type)
-		{
-			il2cppClass* m_pClass = IL2CPP::Class::Find(type);
-			if (!m_pClass) return nullptr;
-
-			return GetComponentInChildren(IL2CPP::Class::GetSystemType(m_pClass), true);
+			return reinterpret_cast<CComponent*(UNITY_CALLING_CONVENTION)(void*, System_String*)>(GameObjectFunctions.m_pGetComponent)(this, IL2CPP::String::New(m_pName));
 		}
 
 		il2cppArray<CComponent*>* GetComponents(il2cppObject* m_pSystemType)
@@ -57,7 +42,7 @@ namespace Unity
 			5 - Reverse
 			6 - Result list
 			*/
-			return reinterpret_cast<Unity::il2cppArray<CComponent*>*(UNITY_CALLING_CONVENTION)(void*, void*, bool, bool, bool, bool, void*)>(m_GameObjectFunctions.m_GetComponents)(this, m_pSystemType, false, false, true, false, nullptr);
+			return reinterpret_cast<Unity::il2cppArray<CComponent*>*(UNITY_CALLING_CONVENTION)(void*, void*, bool, bool, bool, bool, void*)>(GameObjectFunctions.m_pGetComponents)(this, m_pSystemType, false, false, true, false, nullptr);
 		}
 
 		il2cppArray<CComponent*>* GetComponents(const char* m_pSystemTypeName)
@@ -66,7 +51,7 @@ namespace Unity
 			if (!m_pClass) return nullptr;
 
 			return GetComponents(IL2CPP::Class::GetSystemType(m_pClass));
-		}
+		}		
 
 		CComponent* GetComponentByIndex(il2cppObject* m_pSystemType, unsigned int m_uIndex = 0U)
 		{
@@ -86,17 +71,17 @@ namespace Unity
 
 		CTransform* GetTransform()
 		{
-			return reinterpret_cast<CTransform*(UNITY_CALLING_CONVENTION)(void*)>(m_GameObjectFunctions.m_GetTransform)(this);
+			return reinterpret_cast<CTransform*(UNITY_CALLING_CONVENTION)(void*)>(GameObjectFunctions.m_pGetTransform)(this);
 		}
 
 		bool GetActive()
 		{
-			return reinterpret_cast<bool(UNITY_CALLING_CONVENTION)(void*)>(m_GameObjectFunctions.m_GetActive)(this);
+			return reinterpret_cast<bool(UNITY_CALLING_CONVENTION)(void*)>(GameObjectFunctions.m_pGetActive)(this);
 		}
 
 		unsigned int GetLayer()
 		{
-			return reinterpret_cast<unsigned int(UNITY_CALLING_CONVENTION)(void*)>(m_GameObjectFunctions.m_GetLayer)(this);
+			return reinterpret_cast<unsigned int(UNITY_CALLING_CONVENTION)(void*)>(GameObjectFunctions.m_pGetLayer)(this);
 		}
 
 		/*
@@ -104,12 +89,12 @@ namespace Unity
 		*/
 		void SetActive(bool m_bActive)
 		{
-			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, bool)>(m_GameObjectFunctions.m_SetActive)(this, m_bActive);
+			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, bool)>(GameObjectFunctions.m_pSetActive)(this, m_bActive);
 		}
 
 		void SetLayer(unsigned int m_uLayer)
 		{
-			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, unsigned int)>(m_GameObjectFunctions.m_SetLayer)(this, m_uLayer);
+			reinterpret_cast<void(UNITY_CALLING_CONVENTION)(void*, unsigned int)>(GameObjectFunctions.m_pSetLayer)(this, m_uLayer);
 		}
 	};
 
@@ -126,37 +111,12 @@ namespace Unity
 			Quad,
 		};
 
-		void Initialize()
-		{
-			IL2CPP::SystemTypeCache::Initializer::Add(UNITY_GAMEOBJECT_CLASS);
+		void Initialize();
+		
+		CGameObject* CreatePrimitive(m_ePrimitiveType m_eType);
 
-			m_GameObjectFunctions.m_AddComponent			= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_ADDCOMPONENT);
-			m_GameObjectFunctions.m_CreatePrimitive			= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_CREATEPRIMITIVE);
-			m_GameObjectFunctions.m_Find					= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_FIND);
-			m_GameObjectFunctions.m_FindGameObjectsWithTag	= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_FINDGAMEOBJECTWITHTAG);
-			m_GameObjectFunctions.m_GetComponent			= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETCOMPONENT);
-			m_GameObjectFunctions.m_GetComponents			= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETCOMPONENTS);
-			m_GameObjectFunctions.m_GetComponentInChildren	= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETCOMPONENTINCHILDREN);
-			m_GameObjectFunctions.m_GetActive				= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETACTIVE);
-			m_GameObjectFunctions.m_GetLayer				= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETLAYER);
-			m_GameObjectFunctions.m_GetTransform			= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_GETTRANSFORM);
-			m_GameObjectFunctions.m_SetActive				= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_SETACTIVE);
-			m_GameObjectFunctions.m_SetLayer				= IL2CPP::ResolveCall(UNITY_GAMEOBJECT_SETLAYER);
-		}
-
-		CGameObject* CreatePrimitive(m_ePrimitiveType m_Type)
-		{
-			return reinterpret_cast<CGameObject*(UNITY_CALLING_CONVENTION)(m_ePrimitiveType)>(m_GameObjectFunctions.m_CreatePrimitive)(m_Type);
-		}
-
-		CGameObject* Find(const char* m_Name)
-		{
-			return reinterpret_cast<CGameObject*(UNITY_CALLING_CONVENTION)(System_String*)>(m_GameObjectFunctions.m_Find)(IL2CPP::String::New(m_Name));
-		}
-
-		il2cppArray<CGameObject*>* FindWithTag(const char* m_Tag)
-		{
-			return reinterpret_cast<il2cppArray<CGameObject*>*(UNITY_CALLING_CONVENTION)(void*)>(m_GameObjectFunctions.m_FindGameObjectsWithTag)(IL2CPP::String::New(m_Tag));
-		}
+		CGameObject* Find(const char* m_pName);
+		
+		il2cppArray<CGameObject*>* FindWithTag(const char* m_pTag);
 	}
 }

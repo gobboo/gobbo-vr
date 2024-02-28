@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RenderCmd.h"
+#include "RenderCmd.hpp"
 
 #include <utility>
 #include <assert.h>
